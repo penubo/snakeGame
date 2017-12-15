@@ -69,8 +69,8 @@ function Snake(x, y) {
 
     this.show = function() {
         this.goThroughTheWall();
-        fill(255);
-        rect(this.x, this.y, BLOCKSIZE, BLOCKSIZE);
+        fill(255, 105, 84);
+        ellipse(this.x, this.y, BLOCKSIZE, BLOCKSIZE);
     }
 
     this.update = function () {
@@ -82,6 +82,5 @@ function Snake(x, y) {
 }
 
 function boxPosition(val) {
-    return floor(val) * BLOCKSIZE
+    return (floor(val) * BLOCKSIZE) + (BLOCKSIZE * 0.5)
 }
-

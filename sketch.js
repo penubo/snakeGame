@@ -30,13 +30,10 @@ function draw() {
     }
 
     // if snake eat mouse
-
-
-    // draw snake
-    if ( snake.x == mouse.x && snake.y == mouse.y ) {
+    if ( dist(snake.x, snake.y, mouse.x, mouse.y) < BLOCKSIZE ) {
         console.log("hit");
         snake.grow();
-        mouse.update();
+        mouse.reappear();
     }
 
     for(i = 1; i < snake.body.count(); i++) {
@@ -50,13 +47,25 @@ function draw() {
 
 
     // draw mouse
+    xDirection = takeSign(mouse.x - snake.x);
+    yDirection = takeSign(mouse.y - snake.y);
+    mouse.update(x = xDirection, y = yDirection);
     mouse.show();
 
 
 
 }
 
+function takeSign(number) {
+    if(number > 0) {
+        return 1;
+    } else if (number < 0) {
+        return -1;
+    } else {
+        return null;
+    }
+}
+
 function keyPressed() {
     snake.changeDirection();
 }
-

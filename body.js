@@ -67,7 +67,7 @@ function Body() {
             this.next.draw();
         }
         this.update(this.prev.x, this.prev.y);
-        rect(this.x, this.y, BLOCKSIZE, BLOCKSIZE);
+        ellipse(this.x, this.y, BLOCKSIZE, BLOCKSIZE);
     }
 
 
