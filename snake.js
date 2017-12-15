@@ -11,6 +11,7 @@ function Snake(x, y) {
 
     this.x = boxPosition(x);
     this.y = boxPosition(y);
+    this.speed = 1;
 
     // moving direction
     this.direction = {x:BLOCKSIZE, y:0};
@@ -21,6 +22,9 @@ function Snake(x, y) {
     this.body.prev = this;
     this.body.index = 1;
 
+    this.accelerate = function(val) {
+        this.speed *= val;
+    }
 
     this.move = function(xVal, yVal) {
         return {x:BLOCKSIZE*xVal, y:BLOCKSIZE*yVal};
@@ -75,8 +79,9 @@ function Snake(x, y) {
 
     this.update = function () {
         this.body.draw();
-        this.x += this.direction.x;
-        this.y += this.direction.y;
+        this.x += this.direction.x*this.speed;
+        this.y += this.direction.y*this.speed;
+        this.speed = 1;
     }
 
 }

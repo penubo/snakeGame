@@ -4,7 +4,7 @@ BLOCKNUMBER = 40;
 BLOCKSIZE = BOARDWIDTH / BLOCKNUMBER;
 WIDTH = BOARDWIDTH / BLOCKSIZE;
 HEIGHT = BOARDHEIGHT / BLOCKSIZE;
-GAMESPEED = 10;
+GAMESPEED = 15;
 
 
 
@@ -13,12 +13,19 @@ function setup() {
     frameRate(GAMESPEED);
     createCanvas(BOARDWIDTH, BOARDHEIGHT);
     snake = new Snake(20, 20);
-    mouse = new Mouse();
+    mouse = [];
+    for(i = 0; i < 10; i++) {
+        mouse.push(new Mouse());
+    }
+
+    score = 1;
 }
 
 function draw() {
+    score += snake.body.count() * 0.1;
+    // frameRate(GAMESPEED + score * 0.1);
+    // console.log(score);
     background(91);
-
     // draw field line
     for(i = 0; i < width; i += BLOCKSIZE) {
         stroke(255, 15);
@@ -30,12 +37,15 @@ function draw() {
     }
 
     // if snake eat mouse
-    if ( dist(snake.x, snake.y, mouse.x, mouse.y) < BLOCKSIZE ) {
-        console.log("hit");
-        snake.grow();
-        mouse.reappear();
+    for(i = 0; i < 10; i++) {
+        if ( dist(snake.x, snake.y, mouse[i].x, mouse[i].y) < BLOCKSIZE ) {
+            console.log("hit");
+            snake.grow();
+            mouse[i].reappear();
+        }
     }
 
+    // if snake eat its body accidently
     for(i = 1; i < snake.body.count(); i++) {
         if ( snake.x == snake.body.pos(i)[0] && snake.y == snake.body.pos(i)[1] ) {
             snake.body.delete(i);
@@ -47,11 +57,12 @@ function draw() {
 
 
     // draw mouse
-    xDirection = takeSign(mouse.x - snake.x);
-    yDirection = takeSign(mouse.y - snake.y);
-    mouse.update(x = xDirection, y = yDirection);
-    mouse.show();
-
+    for(i = 0; i < 10; i++) {
+        xDirection = takeSign(mouse[i].x - snake.x); // 1 or -1
+        yDirection = takeSign(mouse[i].y - snake.y); // 1 or -1
+        mouse[i].update(x = xDirection, y = yDirection);
+        mouse[i].show();
+    }
 
 
 }
@@ -67,5 +78,8 @@ function takeSign(number) {
 }
 
 function keyPressed() {
+    if(keyCode == 32) {
+        snake.accelerate(3);
+    }
     snake.changeDirection();
 }
