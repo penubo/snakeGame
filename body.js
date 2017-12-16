@@ -9,8 +9,9 @@
 
 
 function Body() {
-    this.x;
-    this.y;
+    this.location = createVector(0, 0);
+    // this.x;
+    // this.y;
     this.next = null;
     this.prev = null;
     this.index;
@@ -40,7 +41,7 @@ function Body() {
             return 'error';
         }
         if(this.index == targetIndex) {
-            return [this.x, this.y];
+            return [this.location.x, this.location.y];
         }
         return this.next.pos(targetIndex);
     }
@@ -57,8 +58,8 @@ function Body() {
     }
 
     this.update = function(x, y) {
-        this.x = x;
-        this.y = y;
+        this.location.x = x;
+        this.location.y = y;
     }
 
     this.draw = function() {
@@ -66,8 +67,8 @@ function Body() {
         if (this.next != null) {
             this.next.draw();
         }
-        this.update(this.prev.x, this.prev.y);
-        ellipse(this.x, this.y, BLOCKSIZE, BLOCKSIZE);
+        this.update(this.prev.location.x, this.prev.location.y);
+        ellipse(this.location.x, this.location.y, BLOCKSIZE, BLOCKSIZE);
     }
 
 

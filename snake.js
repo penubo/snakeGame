@@ -9,8 +9,9 @@ function Snake(x, y) {
 
     this.moon=0;
 
-    this.x = boxPosition(x);
-    this.y = boxPosition(y);
+    this.location = createVector(boxPosition(x), boxPosition(y));
+    // this.x = boxPosition(x);
+    // this.y = boxPosition(y);
     this.speed = 1;
 
     // moving direction
@@ -54,15 +55,15 @@ function Snake(x, y) {
     }
 
     this.goThroughTheWall = function() {
-        if (this.x >= boxPosition(BLOCKNUMBER)) {
-            this.x = boxPosition(0)
-        } else if (this.x < boxPosition(0)) {
-            this.x = boxPosition(BLOCKNUMBER-1)
+        if (this.location.x >= boxPosition(BLOCKNUMBER)) {
+            this.location.x = boxPosition(0)
+        } else if (this.location.x < boxPosition(0)) {
+            this.location.x = boxPosition(BLOCKNUMBER-1)
         }
-        if (this.y >= boxPosition(BLOCKNUMBER)) {
-            this.y = boxPosition(0)
-        } else if (this.y < boxPosition(0)) {
-            this.y = boxPosition(BLOCKNUMBER-1)
+        if (this.location.y >= boxPosition(BLOCKNUMBER)) {
+            this.location.y = boxPosition(0)
+        } else if (this.location.y < boxPosition(0)) {
+            this.location.y = boxPosition(BLOCKNUMBER-1)
         }
     }
 
@@ -74,13 +75,13 @@ function Snake(x, y) {
     this.show = function() {
         this.goThroughTheWall();
         fill(255, 105, 84);
-        ellipse(this.x, this.y, BLOCKSIZE, BLOCKSIZE);
+        ellipse(this.location.x, this.location.y, BLOCKSIZE, BLOCKSIZE);
     }
 
     this.update = function () {
         this.body.draw();
-        this.x += this.direction.x*this.speed;
-        this.y += this.direction.y*this.speed;
+        this.location.x += this.direction.x*this.speed;
+        this.location.y += this.direction.y*this.speed;
         this.speed = 1;
     }
 

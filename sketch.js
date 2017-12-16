@@ -38,7 +38,7 @@ function draw() {
 
     // if snake eat mouse
     for(i = 0; i < 10; i++) {
-        if ( dist(snake.x, snake.y, mouse[i].x, mouse[i].y) < BLOCKSIZE ) {
+        if ( dist(snake.location.x, snake.location.y, mouse[i].location.x, mouse[i].location.y) < BLOCKSIZE ) {
             console.log("hit");
             snake.grow();
             mouse[i].reappear();
@@ -47,7 +47,7 @@ function draw() {
 
     // if snake eat its body accidently
     for(i = 1; i < snake.body.count(); i++) {
-        if ( snake.x == snake.body.pos(i)[0] && snake.y == snake.body.pos(i)[1] ) {
+        if ( snake.location.x == snake.body.pos(i)[0] && snake.location.y == snake.body.pos(i)[1] ) {
             snake.body.delete(i);
         }
     }
@@ -58,8 +58,8 @@ function draw() {
 
     // draw mouse
     for(i = 0; i < 10; i++) {
-        xDirection = takeSign(mouse[i].x - snake.x); // 1 or -1
-        yDirection = takeSign(mouse[i].y - snake.y); // 1 or -1
+        xDirection = takeSign(mouse[i].location.x - snake.x); // 1 or -1
+        yDirection = takeSign(mouse[i].location.y - snake.y); // 1 or -1
         mouse[i].update(x = xDirection, y = yDirection);
         mouse[i].show();
     }
